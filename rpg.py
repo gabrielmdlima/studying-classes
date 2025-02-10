@@ -1,4 +1,5 @@
 from utils import clear_screen
+from random import shuffle
 
 class Personagens:
   def __init__(self, name, vida, ataque, defesa):
@@ -9,7 +10,8 @@ class Personagens:
 
 
   def realizar_ataque(self, ataque, defesa):
-    pass
+    print(ataque)
+    print(defesa)
 
 
   def cura(self):
@@ -47,7 +49,7 @@ def get_player_choice(personagem):
         ind = int(player) - 1
 
         if ind < len(personagem):
-          return personagem[ind].name
+          return ind
         else:
           raise ValueError('Escolha um índice válido!')
       else:
@@ -56,7 +58,7 @@ def get_player_choice(personagem):
           name.append(p.name)
         
         if player in name:
-          return player
+          return name.index(player)
         else:
           raise ValueError('Escolha um nome válido!')
     except ValueError as error:
@@ -64,11 +66,22 @@ def get_player_choice(personagem):
       continue
 
 
+def monster_sequence(monstro):
+  indices = list(range(len(monstro)))
+  shuffle(indices)
+  print('\nA ordem de monstros a ser enfrentada será:')
+  for c, i in enumerate(indices):
+    print(f'{c+1}º {monstro[i].name}')
+  print()
+  return indices
+
+
 def run(heroi, monstro):
   clear_screen()
   print_personagens(heroi)
   player = get_player_choice(heroi)
-  print(player)
+  character = [heroi[player].name, heroi[player].vida, heroi[player].ataque, heroi[player].defesa]
+  monsters = monster_sequence(monstro)
   
 
 
