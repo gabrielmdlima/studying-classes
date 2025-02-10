@@ -39,11 +39,37 @@ def print_personagens(personagem):
   print(' '+'-'*37)
 
 
+def get_player_choice(personagem):
+  while True:
+    try:
+      player = str(input('Escolha seu personagem: ')).strip()
+      if player.isdigit():
+        ind = int(player) - 1
+
+        if ind < len(personagem):
+          return personagem[ind].name
+        else:
+          raise ValueError('Escolha um índice válido!')
+      else:
+        name = []
+        for p in personagem:
+          name.append(p.name)
+        
+        if player in name:
+          return player
+        else:
+          raise ValueError('Escolha um nome válido!')
+    except ValueError as error:
+      print(f'\033[31m{error}\033[m')
+      continue
+
+
 def run(heroi, monstro):
   clear_screen()
-  print_personagens(monstro)
   print_personagens(heroi)
-  player = input('Escolha seu personagem: ')
+  player = get_player_choice(heroi)
+  print(player)
+  
 
 
 if __name__ == '__main__':
