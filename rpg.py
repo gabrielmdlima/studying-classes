@@ -37,7 +37,7 @@ def print_personagens(personagem):
     for i, d in enumerate(personagem):
       vida = f'{d.vida:02}'
       ataque = f'{d.ataque:02}'
-      print(f'|{i+1}.{d.name:10}|{vida:^11}|{ataque:^12}|')
+      print(f'| {d.name:11}|{vida:^11}|{ataque:^12}|')
   print(' '+'-'*37)
 
 
@@ -45,6 +45,7 @@ def get_player_choice(personagem):
   while True:
     try:
       player = str(input('Escolha seu personagem: ')).strip()
+      print()
       if player.isdigit():
         ind = int(player) - 1
 
@@ -69,7 +70,7 @@ def get_player_choice(personagem):
 def monster_sequence(monstro):
   indices = list(range(len(monstro)))
   shuffle(indices)
-  print('\nA ordem de monstros a ser enfrentada será:')
+  print('A ordem de monstros a ser enfrentada será:')
   for c, i in enumerate(indices):
     print(f'{c+1}º {monstro[i].name}')
   print()
@@ -77,13 +78,25 @@ def monster_sequence(monstro):
 
 
 def run(heroi, monstro):
-  clear_screen()
-  print_personagens(heroi)
-  player = get_player_choice(heroi)
-  character = [heroi[player].name, heroi[player].vida, heroi[player].ataque, heroi[player].defesa]
-  monsters = monster_sequence(monstro)
-  
+  while True:
+    clear_screen()
+    print_personagens(heroi)
+    player = get_player_choice(heroi)
+    character = [heroi[player].name, heroi[player].vida, heroi[player].ataque, heroi[player].defesa]
+    print_personagens(monstro)
+    monsters = monster_sequence(monstro)
+    while True:
+      stay = str(input('Sim - Confirmar partida.\nNão - Selecionar novamente\nDigite: ')).strip().upper()[0]
+      if stay in 'SN':
+        break
+    if stay == 'S':
+      break
+    else:
+      continue
 
+  print(f'\n{character[0]} VS. ', end='')
+  for i in monsters:
+    print(f'{monstro[i].name}', end=', ')
 
 if __name__ == '__main__':
   heroi = [
