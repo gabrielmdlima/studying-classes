@@ -77,6 +77,11 @@ def monster_sequence(monstro):
   return indices
 
 
+def rounds(round):
+  rodada = f'{round}ª RODADA'
+  print(f'\n{rodada:^37}')
+
+
 def run(heroi, monstro):
   while True:
     clear_screen()
@@ -93,10 +98,19 @@ def run(heroi, monstro):
       break
     else:
       continue
-
-  print(f'\n{character[0]} VS. ', end='')
-  for i in monsters:
-    print(f'{monstro[i].name}', end=', ')
+  
+  for r, i in enumerate(monsters):
+    rounds(r+1)
+    print(f'\n{character[0]:^16} VS. {monstro[i].name:^16}')
+    her = f'VID: {character[1]}'
+    mons = f'VID: {monstro[i].vida:02}'
+    print(f'{her:^16}     {mons:^16}')
+    her = f'ATQ: {character[2]}'
+    mons = f'ATQ: {monstro[i].ataque:02}'
+    print(f'{her:^16}     {mons:^16}')
+    heroi = f'DEF: {character[3]:02}'
+    print(f'{her:^16}')
+    
 
 if __name__ == '__main__':
   heroi = [
